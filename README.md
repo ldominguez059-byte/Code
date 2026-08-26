@@ -8,6 +8,21 @@ Static site (no build step) for cleanedbypressure.com, ready to deploy on Netlif
 - `assets/js/config.js` — **single place to edit business info + widget IDs**
 - `assets/js/main.js` — nav, reviews widget loader, chat widget loader, FAQ schema
 
+## Adding your logo and photos
+
+Every logo/photo slot on the site is self-healing: it points at a file in `assets/img/` that doesn't exist yet, so right now it shows a nice gradient placeholder instead of a broken image. Drop in a real file with the **exact filename** below and it appears automatically — no code changes needed.
+
+| What | File to add | Used on |
+|---|---|---|
+| Logo | `assets/img/logo.png` (square, transparent background works best, ~200×200px+) | Header + footer on every page |
+| Hero photo | `assets/img/hero-1.jpg` | Homepage hero (your best "wow" photo — a clean driveway, a job in progress, your truck) |
+| Gallery photo | `assets/img/gallery-driveway.jpg` | Homepage "Our Work" gallery |
+| Gallery photo | `assets/img/gallery-house.jpg` | Homepage "Our Work" gallery |
+| Gallery photo | `assets/img/gallery-roof.jpg` | Homepage "Our Work" gallery |
+| Gallery photo | `assets/img/gallery-commercial.jpg` | Homepage "Our Work" gallery |
+
+Just add files to `assets/img/` with those names (same folder, overwrite is fine) and redeploy.
+
 ## Finish setup (3 things)
 
 1. **Google Reviews widget** — sign up free at [elfsight.com](https://elfsight.com), add a "Google Reviews" widget pointed at your business, then paste the widget ID into `elfsightWidgetId` in `assets/js/config.js`. Until then, the site shows a static reviews section with a link straight to your real Google reviews.

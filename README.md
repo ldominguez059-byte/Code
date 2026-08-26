@@ -8,20 +8,22 @@ Static site (no build step) for cleanedbypressure.com, ready to deploy on Netlif
 - `assets/js/config.js` — **single place to edit business info + widget IDs**
 - `assets/js/main.js` — nav, reviews widget loader, chat widget loader, FAQ schema
 
-## Adding your logo and photos
+## Logo and photos
 
-Every logo/photo slot on the site is self-healing: it points at a file in `assets/img/` that doesn't exist yet, so right now it shows a nice gradient placeholder instead of a broken image. Drop in a real file with the **exact filename** below and it appears automatically — no code changes needed.
+Real images are now in `assets/img/`, cropped/compressed from what you sent:
 
-| What | File to add | Used on |
-|---|---|---|
-| Logo | `assets/img/logo.png` (square, transparent background works best, ~200×200px+) | Header + footer on every page |
-| Hero photo | `assets/img/hero-1.jpg` | Homepage hero (your best "wow" photo — a clean driveway, a job in progress, your truck) |
-| Gallery photo | `assets/img/gallery-driveway.jpg` | Homepage "Our Work" gallery |
-| Gallery photo | `assets/img/gallery-house.jpg` | Homepage "Our Work" gallery |
-| Gallery photo | `assets/img/gallery-roof.jpg` | Homepage "Our Work" gallery |
-| Gallery photo | `assets/img/gallery-commercial.jpg` | Homepage "Our Work" gallery |
+| File | Used on |
+|---|---|
+| `logo.jpg` | Header + footer badge on every page (cropped from your full logo graphic — the wordmark version is too detailed to read at that small size) |
+| `logo-full.jpg` | Full uncropped logo graphic, used as the About page's header background |
+| `og-cover.jpg` | The image that shows up when the site is shared on Facebook/iMessage/etc. |
+| `hero-1.jpg` | Homepage hero photo (you spraying down a patio) |
+| `gallery-patio.jpg` | "Our Work" gallery — patio/concrete rust staining job |
+| `gallery-pool-deck.jpg` | "Our Work" gallery — pool deck cleaning |
+| `gallery-bin-cleaning.jpg` | "Our Work" gallery — trash bin before/after collage |
+| `gallery-commercial.jpg` | "Our Work" gallery — **still a placeholder**, no commercial photo yet |
 
-Just add files to `assets/img/` with those names (same folder, overwrite is fine) and redeploy.
+Every slot is self-healing: if a file is ever missing, that spot falls back to a gradient placeholder instead of a broken image. To swap or add more, just drop a file into `assets/img/` with the matching name and redeploy — no code changes needed. Want more gallery tiles (roof washing, driveways, before/afters)? Send more photos and I'll wire them in with new tiles.
 
 ## Finish setup (3 things)
 

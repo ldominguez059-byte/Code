@@ -61,8 +61,14 @@ EMAIL_RE = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 IG_RE = re.compile(r"https?://(?:www\.)?instagram\.com/([A-Za-z0-9_.]+)/?", re.I)
 FB_RE = re.compile(r"https?://(?:www\.)?facebook\.com/([A-Za-z0-9_.\-/?=]+)", re.I)
 JUNK_EMAIL = ("example.com", "sentry", "wixpress", "domain.com", ".png", ".jpg",
-              ".webp", ".gif", "godaddy", "yourname", "email.com", "@2x")
-JUNK_IG = {"p", "reel", "explore", "accounts", "stories", "tv", "sharer"}
+              ".webp", ".gif", "godaddy", "yourname", "email.com", "@2x",
+              "example@", "@mail.com", "@company.com", "donotreply", "noreply",
+              "no-reply", "latofonts", "impallari", ".css", ".js",
+              "azmediaproduction", "dgrcommunications")
+REAL_TLDS = {"com", "net", "org", "us", "co", "biz", "info", "io", "pro", "roofing",
+             "llc", "business", "company", "services", "construction", "contractors",
+             "solutions", "group", "online", "site", "me", "ai", "app", "email"}
+JUNK_IG ={"p", "reel", "explore", "accounts", "stories", "tv", "sharer"}
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
 
@@ -100,8 +106,11 @@ def scan(site, timeout):
     html = "\n".join(pages)
     low = html.lower()
     found = [name for name, sigs in WIDGETS.items() if any(s in low for s in sigs)]
-    emails = sorted({e.lower() for e in EMAIL_RE.findall(html)
-                     if not any(j in e.lower() for j in JUNK_EMAIL)})
+    # URL-encoded / JSON-escaped text leaves prefixes like "%20" or "u003e".
+    text = re.sub(r"%20|\\u00[0-9a-f]{2}|u00[0-9a-f]{2}(?=[a-z0-9._%+-]*@)", " ", html, flags=re.I)
+    emails = sorted({e.lower() for e in EMAIL_RE.findall(text)
+                     if not any(j in e.lower() for j in JUNK_EMAIL)
+                     and e.lower().rsplit(".", 1)[-1] in REAL_TLDS})
     igs = sorted({h for h in IG_RE.findall(html) if h.lower() not in JUNK_IG})
     fbs = sorted({h.split("?")[0].rstrip("/") for h in FB_RE.findall(html)
                   if not h.startswith(("sharer", "plugins", "tr", "dialog"))})
